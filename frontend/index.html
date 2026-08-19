@@ -72,7 +72,7 @@ input,select,textarea{width:100%;border:1px solid #d7dfeb;border-radius:8px;padd
 </main>
 
 <script>
-const API_BASE_URL="";
+const API_BASE_URL="https://flipcart-order-intelligence-production.up.railway.app";
 const api=()=>API_BASE_URL.trim()?API_BASE_URL.replace(/\/$/,""):(location.protocol==="file:"||["localhost","127.0.0.1"].includes(location.hostname)?"http://127.0.0.1:8000":location.origin);
 const $=id=>document.getElementById(id);
 function toast(t){const x=document.createElement("div");x.className="toast";x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2800)}
