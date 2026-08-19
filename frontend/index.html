@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flipkart AI Intelligence</title>
+<style>
+:root{--b:#2874f0;--bd:#1557bf;--o:#fb641b;--bg:#f5f7fb;--t:#172033;--m:#718096;--l:#e2e8f0;--g:#16a34a;--r:#dc2626;--a:#d97706}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--t);min-height:100vh}
+header{background:linear-gradient(110deg,var(--b),var(--bd));color:#fff;padding:12px 22px;box-shadow:0 2px 10px #0002}.nav{max-width:1250px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:38px;height:38px;background:#fff;color:var(--b);border-radius:9px;display:grid;place-items:center;font-weight:900}.brand h1{font-size:18px}.brand h1 span{color:#ffd200;font-style:italic}.brand p{font-size:11px;opacity:.9}
+.status{font-size:11px;font-weight:700;background:#ffffff1c;border:1px solid #ffffff33;border-radius:20px;padding:7px 11px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#20e56b;margin-right:6px}.dot.off{background:#ff4d4d}
+main{max-width:1250px;margin:20px auto;padding:0 16px;display:grid;grid-template-columns:1fr .78fr;gap:18px}.card{background:#fff;border:1px solid var(--l);border-radius:13px;box-shadow:0 4px 18px #1720330a}.left{padding:18px}.head{display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--l);padding-bottom:13px;margin-bottom:15px}.icon{width:33px;height:33px;border-radius:8px;background:#edf4ff;color:var(--b);display:grid;place-items:center}.head h2{font-size:16px}.head p{font-size:10px;color:var(--m)}
+.scenarios,.quick{display:flex;gap:6px;flex-wrap:wrap}.scenarios{margin-bottom:16px}.scenarios button,.quick button{border:1px solid var(--l);background:#fff;border-radius:18px;padding:6px 10px;font-size:10px;font-weight:700;color:#4a5568;cursor:pointer}.scenarios button:hover,.quick button:hover{border-color:#aac8ff;color:var(--b);background:#f5f9ff}
+.section{margin-bottom:15px}.section h3{font-size:10px;color:var(--b);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:flex;flex-direction:column;gap:4px}.field label{font-size:10px;font-weight:700;color:#4a5568}
+input,select,textarea{width:100%;border:1px solid #d7dfeb;border-radius:8px;padding:9px 10px;background:#fff;color:var(--t);font:inherit;font-size:12px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--b);box-shadow:0 0 0 3px #2874f014}textarea{min-height:78px;resize:vertical}
+.upload{position:relative;border:1.5px dashed #b8cbe8;border-radius:9px;background:#f8fbff;min-height:98px;display:grid;place-items:center;text-align:center;overflow:hidden}.upload input{position:absolute;inset:0;opacity:0;cursor:pointer}.idle{font-size:11px;color:var(--m)}.idle b{display:block;color:var(--t);font-size:12px;margin:4px}.preview{display:none;align-items:center;gap:9px;width:100%;padding:9px}.preview img{width:60px;height:60px;object-fit:cover;border-radius:7px}.preview-info{min-width:0;text-align:left}.preview-info b{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}.preview-info small{font-size:10px;color:var(--m)}.remove{margin-left:auto;border:0;background:#fee2e2;color:var(--r);padding:6px 8px;border-radius:6px;cursor:pointer}
+.submit{width:100%;border:0;border-radius:8px;padding:12px;background:linear-gradient(110deg,var(--o),#e95310);color:#fff;font-weight:800;font-size:13px;cursor:pointer}.submit:disabled{opacity:.6}.loading{text-align:center;color:var(--m);font-size:11px;margin-top:7px;display:none}
+.right{display:flex;flex-direction:column;gap:13px}.banner{padding:12px 14px;font-size:11px;background:#edf4ff;border-color:#c9dcff}.banner b{color:#174ea6}.banner span{float:right;color:var(--m)}
+.chat{min-height:300px;display:flex;flex-direction:column;overflow:hidden}.chathead{padding:12px 14px;border-bottom:1px solid var(--l);display:flex;justify-content:space-between;align-items:center}.agent{display:flex;gap:8px;align-items:center}.avatar{width:33px;height:33px;border-radius:50%;background:var(--b);color:#fff;display:grid;place-items:center}.agent b{font-size:12px}.agent small{display:block;font-size:9px;color:var(--m);margin-top:2px}.copy{border:1px solid var(--l);background:#fff;border-radius:6px;padding:5px 8px;font-size:10px;font-weight:700;cursor:pointer}.body{padding:17px;font-size:12px;line-height:1.65;flex:1}.empty{text-align:center;color:var(--m);padding:55px 15px}.empty strong{display:block;color:var(--t);font-size:13px;margin:8px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:13px}.metric{padding:14px}.top{display:flex;justify-content:space-between;margin-bottom:12px}.top b{font-size:10px;color:#4a5568}.engine{font-size:9px;color:var(--m);background:#f1f4f8;padding:3px 6px;border-radius:9px}.mainval{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.value{font-size:16px;font-weight:800}.score{font:800 16px Consolas,monospace}.badge{padding:4px 7px;border-radius:6px;font-size:10px;font-weight:800}.idle{background:#f1f4f8;color:#8994a5}.low{background:#ecfdf3;color:var(--g)}.medium{background:#fff7e6;color:var(--a)}.high{background:#fef2f2;color:var(--r)}.meta{font-size:9px;color:var(--m);margin-bottom:6px}.bar{height:6px;background:#edf0f4;border-radius:5px;overflow:hidden}.fill{height:100%;width:0;background:var(--b);transition:width .5s}
+.toast{position:fixed;right:16px;bottom:16px;background:#172033;color:#fff;padding:9px 12px;border-radius:7px;font-size:11px;z-index:5}
+@media(max-width:900px){main{grid-template-columns:1fr}}@media(max-width:600px){.brand p{display:none}.status{font-size:9px}.grid,.metrics{grid-template-columns:1fr}.left{padding:14px}.banner span{float:none;display:block;margin-top:4px}}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand"><div class="logo">⚡</div><div><h1>Flipkart <span>AI Intelligence</span></h1><p>Order Return Risk & Vision Support Agent</p></div></div><div class="status"><i class="dot off" id="dot"></i><span id="status">Checking Backend...</span></div></div></header>
+
+<main>
+<section class="card left">
+<div class="head"><div class="icon">📋</div><div><h2>Order Analysis</h2><p>Order details + product image + customer query</p></div></div>
+
+<div class="scenarios"><button type="button" onclick="scenario('high')">🔥 High Risk</button><button type="button" onclick="scenario('low')">🟢 Low Risk</button><button type="button" onclick="scenario('medium')">🟠 Medium Risk</button></div>
+
+<form id="form">
+<div class="section"><h3>📦 Order Information</h3><div class="grid">
+<div class="field"><label>Product Category</label><select name="product_category" id="category"><option>Footwear</option><option>Apparel</option><option>Electronics</option><option>Home</option><option>Beauty</option></select></div>
+<div class="field"><label>Price (₹)</label><input name="price_inr" id="price" type="number" value="2499" min="1" required></div>
+<div class="field"><label>Discount (%)</label><input name="discount_pct" id="discount" type="number" value="20" min="0" max="90" required></div>
+<div class="field"><label>Payment Method</label><select name="payment_method" id="payment"><option value="COD">Cash on Delivery (COD)</option><option value="Prepaid_Card">Prepaid Card</option><option value="Prepaid_UPI">Prepaid UPI</option><option value="Wallet">Flipkart Wallet</option></select></div>
+</div></div>
+
+<div class="section"><h3>👤 Customer Information</h3><div class="grid">
+<div class="field"><label>Customer Tenure (Days)</label><input name="customer_tenure_days" id="tenure" type="number" value="300" min="1" required></div>
+<div class="field"><label>Previous Orders</label><input name="num_previous_orders" id="orders" type="number" value="8" min="0" required></div>
+<div class="field"><label>Previous Returns</label><input name="num_previous_returns" id="returns" type="number" value="3" min="0" required></div>
+<div class="field"><label>Customer Rating (Optional)</label><input name="rating_given" id="rating" type="number" placeholder="1 - 5" min="1" max="5"></div>
+</div></div>
+
+<div class="section"><h3>📷 Product Image</h3><div class="upload">
+<input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+<div class="idle" id="idle">📷<b>Upload Product Image</b>JPG, PNG or WEBP · Max 10MB</div>
+<div class="preview" id="preview"><img id="thumb"><div class="preview-info"><b id="filename"></b><small id="filesize"></small></div><button type="button" class="remove" onclick="removeImage(event)">Remove</button></div>
+</div></div>
+
+<div class="section"><h3>💬 Customer Query</h3><textarea name="question" id="question" required>I received this item yesterday, but the size seems too tight. Can I request an exchange or return?</textarea>
+<div class="quick"><button type="button" onclick="promptText('What is the return and replacement policy window for this product?')">Return Policy</button><button type="button" onclick="promptText('The size is too tight. How do I initiate an exchange or return?')">Size Exchange</button><button type="button" onclick="promptText('The item was delivered damaged. How can I request a replacement?')">Damaged Item</button><button type="button" onclick="promptText('When will my refund be credited?')">Refund</button><button type="button" onclick="promptText('How do I claim the brand warranty and download the invoice?')">Warranty</button></div>
+</div>
+
+<button class="submit" id="submit">✨ Analyze Order & Consult AI</button><div class="loading" id="loading">Analyzing with Random Forest + TFLite + Mistral AI...</div>
+</form>
+</section>
+
+<section class="right">
+<div class="card banner"><b>AI Order Intelligence</b><span>Random Forest · TFLite · Mistral AI</span></div>
+<div class="card chat"><div class="chathead"><div class="agent"><div class="avatar">🤖</div><div><b>Flipkart AI Support Specialist</b><small id="agentStatus">Ready</small></div></div><button class="copy" onclick="copyResponse()">📋 Copy</button></div><div class="body" id="response"><div class="empty">✨<strong>AI Support Ready</strong>Analyze an order to get return risk, product category and a personalized support response.</div></div></div>
+<div class="metrics">
+<div class="card metric"><div class="top"><b>ML Return Risk</b><span class="engine">RandomForest</span></div><div class="mainval"><span class="badge idle" id="risk">--</span><span class="score" id="riskScore">--%</span></div><div class="meta">Return Probability: <span id="riskMeta">--</span></div><div class="bar"><div class="fill" id="riskBar"></div></div></div>
+<div class="card metric"><div class="top"><b>Vision Classifier</b><span class="engine">TFLite 224×224</span></div><div class="mainval"><span class="value" id="vision">--</span><span class="score" id="visionScore">--%</span></div><div class="meta">Model Confidence: <span id="visionMeta">--</span></div><div class="bar"><div class="fill" id="visionBar"></div></div></div>
+</div>
+</section>
+</main>
+
+<script>
+const API_BASE_URL="";
+const api=()=>API_BASE_URL.trim()?API_BASE_URL.replace(/\/$/,""):(location.protocol==="file:"||["localhost","127.0.0.1"].includes(location.hostname)?"http://127.0.0.1:8000":location.origin);
+const $=id=>document.getElementById(id);
+function toast(t){const x=document.createElement("div");x.className="toast";x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2800)}
+async function health(){try{const r=await fetch(api()+"/health",{cache:"no-store"});if(!r.ok)throw 0;$("dot").classList.remove("off");$("status").textContent="Backend Online"}catch{$("dot").classList.add("off");$("status").textContent="Backend Offline"}}health();setInterval(health,15000);
+
+$("image").onchange=e=>{const f=e.target.files[0];if(!f)return;if(!["image/jpeg","image/png","image/webp"].includes(f.type)||f.size>10*1024*1024){toast("Use JPG, PNG or WEBP under 10MB");e.target.value="";return}const r=new FileReader();r.onload=x=>{$("thumb").src=x.target.result;$("filename").textContent=f.name;$("filesize").textContent=(f.size/1024).toFixed(1)+" KB";$("idle").style.display="none";$("preview").style.display="flex"};r.readAsDataURL(f)};
+function removeImage(e){e?.preventDefault();e?.stopPropagation();$("image").value="";$("preview").style.display="none";$("idle").style.display="block"}
+function promptText(t){$("question").value=t;$("question").focus()}
+function setV(v){$("category").value=v.c;$("price").value=v.p;$("discount").value=v.d;$("payment").value=v.pm;$("tenure").value=v.t;$("orders").value=v.o;$("returns").value=v.r;$("rating").value=v.rt;promptText(v.q)}
+function scenario(s){if(s==="high")setV({c:"Footwear",p:3499,d:45,pm:"COD",t:120,o:4,r:3,rt:"",q:"The shoe size is too tight. How do I request an exchange or return?"});if(s==="low")setV({c:"Electronics",p:12999,d:10,pm:"Prepaid_UPI",t:850,o:28,r:1,rt:5,q:"How do I register the product warranty and download the invoice?"});if(s==="medium")setV({c:"Apparel",p:1499,d:30,pm:"Wallet",t:250,o:7,r:1,rt:4,q:"The product color is different from the displayed image. Can I return it?"})}
+$("form").onsubmit=async e=>{e.preventDefault();if(!$("question").value.trim()){toast("Please enter a customer query");return}$("submit").disabled=true;$("loading").style.display="block";$("agentStatus").textContent="Analyzing...";try{const r=await fetch(api()+"/api/support",{method:"POST",body:new FormData($("form"))});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.detail||"Backend request failed");render(d);toast("Analysis completed")}catch(err){$("response").innerHTML="<b style='color:#dc2626'>⚠ "+esc(err.message)+"</b>";$("agentStatus").textContent="Error";toast(err.message)}finally{$("submit").disabled=false;$("loading").style.display="none"}};
+function render(d){const risk=String(d.return_risk||"LOW").toUpperCase(),p=Number(d.return_probability||0)*100,c=d.product_category||"Unclassified",conf=Number(d.image_confidence||0)*100;$("risk").textContent=risk+" RISK";$("risk").className="badge "+risk.toLowerCase();$("riskScore").textContent=p.toFixed(1)+"%";$("riskMeta").textContent=p.toFixed(1)+"%";$("riskBar").style.width=Math.min(100,p)+"%";$("vision").textContent=c;$("visionScore").textContent=conf.toFixed(1)+"%";$("visionMeta").textContent=conf.toFixed(1)+"%";$("visionBar").style.width=Math.min(100,conf)+"%";$("response").innerHTML=fmt(d.response||"No AI response received.");$("agentStatus").textContent="Response Ready"}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function fmt(s){return esc(s).split(/\n+/).filter(Boolean).map(x=>"<p>"+x.replace(/\*\*(.*?)\*\*/g,"<b>$1</b>")+"</p>").join("")}
+async function copyResponse(){const t=$("response").innerText.trim();if(!t||t.includes("AI Support Ready")){toast("No response to copy");return}try{await navigator.clipboard.writeText(t);toast("Response copied")}catch{toast("Copy failed")}}
+</script>
+</body>
+</html>

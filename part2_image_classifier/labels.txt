@@ -1,0 +1,5 @@
+0 Electronics
+1 Apparel
+2 Footwear
+3 Home
+4 Beauty
