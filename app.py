@@ -2,43 +2,56 @@ import os
 import sys
 from pathlib import Path
 from typing import Optional
+import modal
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
+# 1. Modal Image & Dependencies + Directories Configuration
+image = (
+    modal.Image.debian_slim(python_version="3.11")
+    .pip_install(
+        "fastapi>=0.110.0",
+        "uvicorn>=0.28.0",
+        "mistralai>=1.0.0",
+        "python-dotenv>=1.0.0",
+        "scikit-learn>=1.4.0",
+        "pandas>=2.2.0",
+        "numpy>=1.26.0",
+        "Pillow>=10.2.0",
+        "joblib>=1.3.2",
+        "python-multipart>=0.0.9",
+        "requests>=2.31.0",
+        "ai-edge-litert>=2.0.0"
+    )
+    .add_local_dir("part1_return_risk", remote_path="/root/part1_return_risk")
+    .add_local_dir("part2_image_classifier", remote_path="/root/part2_image_classifier")
+    .add_local_dir("part3_support_agent", remote_path="/root/part3_support_agent")
+)
 
-from part1_return_risk.predict import predict_return_risk
-from part2_image_classifier.predict import predict_image
-from part3_support_agent.agent import generate_support_response
+app = modal.App("flipcart-order-intelligence-backend", image=image)
 
-app = FastAPI(
+# 2. FastAPI App Setup
+web_app = FastAPI(
     title="Flipkart Order Intelligence API",
     description="Multi-modal AI Customer Support with Return Risk Analysis and TFLite Vision Classification",
     version="2.0.0"
 )
 
-allowed_origins_env = os.environ.get("ALLOWED_ORIGINS", "*")
-allowed_origins = [o.strip() for o in allowed_origins_env.split(",") if o.strip()] or ["*"]
-
-app.add_middleware(
+web_app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins if "*" not in allowed_origins else ["*"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
-@app.get("/health")
+@web_app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    return {"status": "ok", "message": "API live on Modal"}
 
-
-@app.post("/support")
-@app.post("/api/support")
+@web_app.post("/support")
+@web_app.post("/api/support")
 async def support_endpoint(
     question: str = Form(...),
     price_inr: float = Form(2499.0),
@@ -55,6 +68,15 @@ async def support_endpoint(
     image: Optional[UploadFile] = File(None)
 ):
     try:
+        # Lazy imports for Modal runtime container paths
+        ROOT_DIR = Path("/root")
+        if str(ROOT_DIR) not in sys.path:
+            sys.path.insert(0, str(ROOT_DIR))
+
+        from part1_return_risk.predict import predict_return_risk
+        from part2_image_classifier.predict import predict_image
+        from part3_support_agent.agent import generate_support_response
+
         detected_category = product_category or "Apparel"
         image_confidence = 0.95
 
@@ -118,9 +140,11 @@ async def support_endpoint(
             detail="An error occurred while processing the support request. Please try again."
         )
 
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 8000))
-    host = os.environ.get("HOST", "0.0.0.0")
-    uvicorn.run("part3_support_agent.app:app", host=host, port=port, reload=False)
+# 3. Modal ASGI Endpoint Deployment with Mistral API Secret
+@app.function(
+    min_containers=1,
+    secrets=[modal.Secret.from_name("my-mistral-secret")]
+)
+@modal.asgi_app()
+def fastapi_app():
+    return web_app
